@@ -52,7 +52,7 @@ public class RequestHandler extends Thread {
 
             // url 로 회원가입 분기처리
             String url = tokens[1];
-            if (url.startsWith("/user/create")){
+            if ("/user/create".equals(url)){
                 // 요청 본문의 길이 만큼 데이터를 읽어옴 - 필자가 구현해둔 IOUtils.readData() 활용
                 String body = IOUtils.readData(br, contentLength);
                 // 쿼리 스트링 정보를 Map으로 저장, 필자가 구현해둔 파싱 메서드를 활용
@@ -60,10 +60,13 @@ public class RequestHandler extends Thread {
                 // 사용자를 생성
                 User user = new User(params.get("userId"), params.get("password"), params.get("name"), params.get("email"));
                 log.debug("User : {}", user);
+                // 응답 상태 코드 302(redirect) 헤더, index.html로 redirect하도록 작성
+                DataOutputStream dos = new DataOutputStream(out);
+                response302Header(dos, "/index.html");
             } else {
                 DataOutputStream dos = new DataOutputStream(out);
                 // file을 file io와 NIO로 처리
-                byte[] body = Files.readAllBytes(new File("./webapp" + tokens[1]).toPath());
+                byte[] body = Files.readAllBytes(new File("./webapp" + url).toPath());
                 response200Header(dos, body.length);
                 responseBody(dos, body);
             }
@@ -86,6 +89,17 @@ public class RequestHandler extends Thread {
             dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
             dos.writeBytes("\r\n");
         } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    // 응답 상태 코드 302(redirect) 헤더
+    private void response302Header(DataOutputStream dos, String url){
+        try{
+            dos.writeBytes("HTTP/1.1 302 Redirect \r\n");
+            dos.writeBytes("Location: "+ url + " \r\n");
+            dos.writeBytes("\r\n");
+        } catch (IOException e){
             log.error(e.getMessage());
         }
     }
