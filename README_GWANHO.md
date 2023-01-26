@@ -135,22 +135,21 @@
 - start() 메소드는 스레드를 시작하는 메소드
     - start() 메소드를 만들지 않아도 java에서 run()을 수행하도록 동작
 
-### 자바의 입출력 스트림
-#### 
-
-
 ### HTTP
-#### HTTP Header
-- 요청 헤더
-- 응답 헤더
+#### 요청 데이터
+    - 요청라인 : 요청 데이터의 첫 번째 라인, "[HTTP 메서드] [URI] [HTTP 버전]" 으로 구성
+    - 요청헤더: "<필드 이름> : <필드 값>" 형태로 구성, 요청 라인을 제외한 나머지 요청부분으로 마지막은 빈 문자열("")로 구성
+    - 요청본문: 선택사항으로 헤더의 빈 문자열 이후에 추가될 수 있음
+- HTTP 메서드
+
+#### 응답
+- HTTP Status Code
 
 ### 네트워크
 - Client-Server
 
-#### HTTP Status Code
-
-### 웹 서버
-
+### git push 되돌리기
+- [push 되돌리기 참고](https://ninano1109.tistory.com/3)
 
 ## HTTP 웹 서버에 대한 요구사항 및 구현
 ### 요구사항 1 - http://localhost:8080/index.html로 접속시 응답
@@ -161,7 +160,12 @@
   - RequestHandler 클래스의 run() 메소드에서 실습을 진행
   - run() 메소드의 복잡도가 증가하는 경우 새로운 클래스, 메소드로 분리하는 방식으로 리팩토링
   - run() 메소드에서 InputStream은 클라이언트(웹 브라우저)에서 서버로 요청을 보낼 때 전달되는 데이터, OutputStream은 서버에서 클라이언트에 응답을 보낼 때 전달되는 데이터를 담당하는 스트림
-
+- InputStream 스트림 처리
+  - 클라이언트에서 서버로 전송하는 데이터를 BufferedReader의 readLine() 메서드를 이용해 한 줄씩 읽어서 분석
+  - InputStream은 byte stream이기 때문에 InputStreamReader로 character stream으로 바꾸어서 UTF-8로 디코딩 해줌 [InputStreamReader Char 디코딩 참고](https://codingdog.tistory.com/entry/java-inputstreamreader-%ED%81%B4%EB%9E%98%EC%8A%A4%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4-%EB%B4%85%EC%8B%9C%EB%8B%A4)
+- 요청라인 부분을 토큰화하여 URI를 추출하고, ./webapp 경로로 파일 반환
+  - java io와 NIO를 사용하여 파일 데이터 처리
+  
 ### 요구사항 2 - get 방식으로 회원가입
 - 
 
