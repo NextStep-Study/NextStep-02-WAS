@@ -213,7 +213,9 @@
   - StringBuilder로 직접 HTML을 작성하고 bytes로 변환하여 DataOutputStream에 적재
 
 ### 요구사항 6 - stylesheet 적용
-- 
+- HTML 소스코드의 <link> 태크에 설정되어 있는 CSS 파일 등을 브라우저에서 비동기적으로 요청하는데 이를 반환하기 위해서는 Content-Type을 구분해서 인식해야한다.
+  - 현재까지는 모든 응답을 text/html로 고정해서 응답하여 동작하지 않았다.
+  - URL의 확장자가 css인 경우 text/css로 응답을 보내도록 구현한다.
 
 ### heroku 서버에 배포 후
 -
