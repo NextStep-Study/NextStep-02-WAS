@@ -208,7 +208,9 @@
 - HTTP는 기본적으로 stateless이다
   - 이러한 문제로 로그인한 상태를 기록할 방법이 필요하다.
   - 우선 클라이언트에 Cookie 저장하고 주고받는 방식으로 로그인 상태를 유지하도록 구현한다.
-  - 
+  - Header에서 Set-Cookie : logined=true 정보를 주고 서버에서는 클라이언트의 쿠키로부터 logined 값 추출하여 확인한다.
+- 사용자가 로그인 상태인 경우 /user/list로 접근하면 사용자 목록을 보여준다.
+  - StringBuilder로 직접 HTML을 작성하고 bytes로 변환하여 DataOutputStream에 적재
 
 ### 요구사항 6 - stylesheet 적용
 - 
