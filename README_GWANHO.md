@@ -173,7 +173,15 @@
   - 쿼리 스트링을 파싱해서 사용자 회원가입 정보를 Map으로 저장하고 User 생성
 
 ### 요구사항 3 - post 방식으로 회원가입
--
+- get 방식은 요청 데이터(URI)에 민감정보가 포함되어 전송되고, 길이제한이 있어 한계가 있음
+  - 이를 POST 방식으로 수정
+  - form 태그의 method 속성을 post로 수정
+  - post 방식에서는 HTTP 요청의 본문(body)를 통해 전달되고, 본문 데이터에 대한 길이가 Content-Length라는 필드 이름으로 전달 됨
+  - body로 위치만 바뀌고 쿼리 스트링과 동일하게 &으로 이어진 형식으로 전달됨
+- 본문읽기
+  - HTTP 요청의 body를 읽는 기능을 구현한 IOUtils.readData() 활용
+  - Content-Length의 값으로 본문의 길이만큼 읽어 Map<String, String> 에 데이터를 저장
+  - IOUtils.readData()는 br를 전달받아서 요청 본문이 시작되는 부분부터 요청 본문의 길이만큼 char[]에 읽어온 다음, String으로 변환하여 반환
 
 ### 요구사항 4 - redirect 방식으로 이동
 - 
